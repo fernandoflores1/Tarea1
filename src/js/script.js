@@ -14,13 +14,13 @@ inputElement.setAttribute("type", "date");
 inputElement.setAttribute("name", "fecha");
 inputElement.setAttribute("id", "objetiveDate");
 
-let fechaNueva = null;
+let newDate = null;
 let targetTime = null;
 
 inputElement.addEventListener("change", () => {
-    fechaNueva = new Date(inputElement.value);
-    fechaNueva.setHours(0, 0, 0, 0);
-    targetTime = fechaNueva.getTime();
+    newDate = new Date(inputElement.value);
+    newDate.setHours(0, 0, 0, 0);
+    targetTime = newDate.getTime();
 });
 
 bodyElement.append(divElement);
