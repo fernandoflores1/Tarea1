@@ -1,0 +1,59 @@
+*{
+    font-family: Verdana;
+}
+
+.green{
+    color: green;
+}
+
+.orange{
+    color: orange;
+}
+
+.red{
+    color: red;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: rgba(192, 235, 76, 0.836);
+}
+
+div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.contenedor{
+    background-color: rgb(136, 136, 136);
+    height: 30%;
+    border-radius: 10px;
+    border: 2px, solid, salmon;
+    padding: 1rem;
+    width: 45%;
+}
+
+.contenedor:hover{
+    transition: 0.5s;
+    background-color: cornflowerblue;
+}
+
+input{
+    border-radius: 20px;
+    border: 1px solid black;
+}
+
+input:hover{
+    transition: 0.5s;
+    padding: 0.5rem;
+}
+
+.felicidades{
+    font-weight: bold;
+    font-style: italic;
+}

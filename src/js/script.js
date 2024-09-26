@@ -1,42 +1,60 @@
 let bodyElement = document.getElementById("main");
-
-let fechaEscogida = new Date(2024, 11,15);
-fechaEscogida.setHours(0, 0, 0, 0);
-
 let countdown = document.createElement("p");
+let divElement = document.createElement("div");
+let divCountown = document.createElement("div");
+
+divCountown.setAttribute("class", "contenedor");
+
+let h1Element = document.createElement("h1");
+
+h1Element.textContent = "Counter"
 
 let inputElement = document.createElement("input");
 inputElement.setAttribute("type", "date");
 inputElement.setAttribute("name", "fecha");
-inputElement.setAttribute("id", "fechaObjetivo");
+inputElement.setAttribute("id", "objetiveDate");
+
+let fechaNueva = null;
+let targetTime = null;
+
+inputElement.addEventListener("change", () => {
+    fechaNueva = new Date(inputElement.value);
+    fechaNueva.setHours(0, 0, 0, 0);
+    targetTime = fechaNueva.getTime();
+});
+
+bodyElement.append(divElement);
+divElement.append(divCountown)
+divCountown.append(h1Element);
+divCountown.append(countdown);
+divCountown.append(inputElement);
 
 
-bodyElement.append(countdown);
-bodyElement.append(inputElement);
+let countdownIntervale = setInterval(() => {
+    const now = new Date().getTime();
 
-let nombreIntervalo = setInterval(() => {
-    const now = new Date();
+    if (targetTime) {
+        let remainingTime = targetTime - now;
+        if (remainingTime > 0) {
+            const totalMonths = Math.trunc(remainingTime / (1000 * 60 * 60 * 24 * 30));
+            const remainingDays = Math.trunc((remainingTime % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+            const hours = Math.trunc((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.trunc((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.trunc((remainingTime % (1000 * 60)) / 1000);
 
-    if (fechaEscogida > now) {
-        const totalMilliseconds = fechaEscogida.getTime() - now.getTime();
-        const totalSeconds = Math.trunc(totalMilliseconds / 1000);
-        const seconds = totalSeconds % 60;
-        const totalMinutes = Math.trunc(totalSeconds / 60);
-        const minutes = totalMinutes % 60;
-        const totalHours = Math.trunc(totalMinutes / 60);
-        const hours = totalHours % 24;
-        const totalDays = Math.trunc(totalHours / 24);
+            if (totalMonths >= 1) {
+                countdown.setAttribute("class", "green");
+            } else if (totalMonths == 0 && remainingDays >= 7) {
+                countdown.setAttribute("class", "orange");
+            } else if (remainingDays < 7) {
+                countdown.setAttribute("class", "red");
+            }
 
-        let months = (fechaEscogida.getFullYear() - now.getFullYear()) * 12 + (fechaEscogida.getMonth() - now.getMonth());
-        const days = totalDays % 30;
-
-        countdown.textContent = `Mes(es): ${months}, Día(s): ${days}, Hora(s): ${hours}, Minuto(s): ${minutes}, Segundo(s): ${seconds}`;
-
-    }else{
-        clearInterval(nombreIntervalo);
-        countdown.textContent = "¡¡HAPPY BIRTHDAY!!"
+            countdown.textContent = `${totalMonths} months, ${remainingDays} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+        } else if (remainingTime < 0) {
+            clearInterval(countdownIntervale);
+            countdown.textContent = "HAPPY BIRTHDAY !!";
+            countdown.setAttribute("class", "felicidades");
+        }
     }
-    
 }, 1000);
-
-
